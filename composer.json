@@ -1,11 +1,11 @@
 {
-    "name": "spatie/laravel-server-monitor",
+    "name": "karlmonson/laravel-server-monitor",
     "description": "Monitor servers",
     "keywords": [
         "spatie",
         "laravel-server-monitor"
     ],
-    "homepage": "https://github.com/spatie/laravel-server-monitor",
+    "homepage": "https://github.com/karlmonson/laravel-server-monitor",
     "license": "MIT",
     "authors": [
         {
