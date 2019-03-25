@@ -31,21 +31,30 @@ trait HasProcess
         $sshCommandPrefix = config('server-monitor.ssh_command_prefix');
         $sshCommandSuffix = config('server-monitor.ssh_command_suffix');
 
-        $result = 'ssh';
-        if ($sshCommandPrefix) {
-            $result .= ' '.$sshCommandPrefix;
+        $result = '';
+        if($this->host->name != 'localhost') {
+            $result .= 'ssh';
+            if ($sshCommandPrefix) {
+                $result .= ' '.$sshCommandPrefix;
+            }
+            $result .= ' '.$this->getTarget();
+            if ($portArgument) {
+                $result .= ' '.$portArgument;
+            }
+            if ($sshCommandSuffix) {
+                $result .= ' '.$sshCommandSuffix;
+            }
+            $result .= " 'bash -se <<$delimiter".PHP_EOL
+                .'set -e'.PHP_EOL
+                .$definition->command().PHP_EOL
+                .$delimiter."'";
+        } else {
+            $result .= "bash -se <<$delimiter".PHP_EOL
+                .'set -e'.PHP_EOL
+                .$definition->command().PHP_EOL
+                .$delimiter;
         }
-        $result .= ' '.$this->getTarget();
-        if ($portArgument) {
-            $result .= ' '.$portArgument;
-        }
-        if ($sshCommandSuffix) {
-            $result .= ' '.$sshCommandSuffix;
-        }
-        $result .= " 'bash -se <<$delimiter".PHP_EOL
-            .'set -e'.PHP_EOL
-            .$definition->command().PHP_EOL
-            .$delimiter."'";
+
 
         return $result;
     }
