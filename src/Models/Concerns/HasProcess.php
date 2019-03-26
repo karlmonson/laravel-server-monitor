@@ -32,7 +32,7 @@ trait HasProcess
         $sshCommandSuffix = config('server-monitor.ssh_command_suffix');
 
         $result = '';
-
+        dd($this->host);
         if($this->host->name != 'localhost' || $this->host->port != '127.0.0.1') {
             $result .= 'ssh';
             if ($sshCommandPrefix) {
